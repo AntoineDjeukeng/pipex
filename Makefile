@@ -6,7 +6,7 @@
 #    By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 14:45:59 by adjeuken          #+#    #+#              #
-#    Updated: 2025/08/04 14:56:44 by adjeuken         ###   ########.fr        #
+#    Updated: 2025/08/04 16:20:38 by adjeuken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LDFLAGS     = -L./libft -lft
 LIBFT_DIR   = ./libft
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
-SRC         = utils/fork.c
+SRC         = utils/fork.c utils/ft_cleanup_process.c
 SRCS_MAIN   = main.c $(SRC)
 OBJS_MAIN   = $(SRCS_MAIN:.c=.o)
 
