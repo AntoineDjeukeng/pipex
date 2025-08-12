@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:01:33 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/07/17 11:15:00 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:46:26 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct t_flags
 	t_bool			zero;
 	t_bool			hash;
 	int				width;
+	int				fd;
 	int				precision;
 	int				sign;
 	t_bool			precision_specified;
@@ -82,6 +83,7 @@ typedef struct s_list_state
 	int				end;
 }					t_state;
 int					ft_putnchr(char c, int n);
+int					ft_dputnchr(int fd, char c, int n);
 int					ft_printf(const char *format, ...);
 
 char				*ft_strndup(const char *s, size_t n);
@@ -105,3 +107,6 @@ int					ft_vprintf(const char *format, va_list **args);
 char				*temp_pad_string(const char *str, int t_len, char pad,
 						t_bool align);
 char				get_sign_char(int value, t_flags *f);
+void				process_format_nodes(t_printf *head, va_list *args);
+void				process_format_node(t_printf *node, va_list *args);
+int					ft_dprintf(int fd, const char *format, ...);

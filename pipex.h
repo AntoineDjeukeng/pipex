@@ -5,37 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 10:52:10 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/04 23:39:11 by adjeuken         ###   ########.fr       */
+/*   Created: 2025/08/06 23:33:43 by adjeuken          #+#    #+#             */
+/*   Updated: 2025/08/07 16:50:17 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-
 #include "libft/libft.h"
-
-
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <string.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
-typedef struct 
+typedef struct s_pipex
 {
-    int open_index;
-    int close_index;
-    int wait_id;
-    int id;
-	char **commands;
-} t_process_args;
+	int		argc;
+	char	**argv;
+	char	**cmds;
+	int		**pipes;
+	int		n_cmds;
+	char	**envp;
+	pid_t	*pids;
+	int		heredoc;
+	char	*heredoc_delimiter;
+	char	*outfile;
+	int		in_fd;
+	int		out_fd;
+}			t_pipex;
 
-typedef struct 
-{
-    t_process_args *processes;
-    int numb_process;
-    int **pipes;
-    int state;
-} t_main_process;
-
-t_main_process *init_main_process(int count);
-void free_main_process(t_main_process *main);
-void ft_action_function(t_main_process *main, int id);
+void		ft_error(const char *msg, const char *detail, int exit_code,
+				pid_t *pids);
+void		safe_execve(char *cmd, char **envp, pid_t *pids);
+int			wait_for_children(pid_t *pids, int count);
+void		close_and_free_pipes(t_pipex *px);
+int			setup_stdout(int i, t_pipex *px);
+int			setup_stdin(int i, t_pipex *px);
+void		ft_children_action(int i, t_pipex *px);
+int			fork_children(t_pipex *px);
+int			create_pipes(t_pipex *px);
+int			init_pipex(t_pipex *px, int argc, char **argv, char **envp);
+void		ft_free_all(t_pipex *px);
+void		ft_free_pipes(t_pipex *px, int count);
+void		ft_print_error(int fd, char *context, char *msg);
+int			setup_heredoc(const char *delimiter);
+int	setup_heredoc(const char *delimiter);
+int	parse_arguments(t_pipex *px, int argc, char **argv);

@@ -6,7 +6,7 @@
 /*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 08:53:22 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/07/19 13:17:41 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:52:48 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 char				*ft_strdup(char *s);
 char				**ft_split(const char *s, char c);
 int					ft_strcmp(const char *s1, const char *s2);
-
+int					ft_isspace(char c);
 #endif

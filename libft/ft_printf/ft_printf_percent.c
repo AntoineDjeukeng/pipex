@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_percent.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:07:03 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/03 18:51:42 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:50:06 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_flag_percent(t_flags *f)
 	final_str = ft_flag_percent_and_return_len(f);
 	if (!final_str)
 		return (-1);
-	printed_len = (int)write(1, final_str, ft_strlen(final_str));
+	printed_len = (int)write(f->fd, final_str, ft_strlen(final_str));
 	free(final_str);
 	return (printed_len);
 }

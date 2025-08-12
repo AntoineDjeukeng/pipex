@@ -1,16 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 02:27:38 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/07 15:00:31 by adjeuken         ###   ########.fr       */
+/*   Created: 2025/08/07 02:28:20 by adjeuken          #+#    #+#             */
+/*   Updated: 2025/08/07 16:50:03 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	safe_execve(char *cmd, char **envp, pid_t *pids)
+{
+	char	**argv_exec;
+
+	if (!cmd || !*cmd)
+		ft_error("command not found", cmd, 127, pids);
+	argv_exec = malloc(sizeof(char *) * 4);
+	if (!argv_exec)
+		ft_error("malloc failed", NULL, 1, pids);
+	argv_exec[0] = "/bin/sh";
+	argv_exec[1] = "-c";
+	argv_exec[2] = cmd;
+	argv_exec[3] = NULL;
+	execve(argv_exec[0], argv_exec, envp);
+	free(argv_exec);
+	if (errno == ENOENT)
+		ft_error("command not found", cmd, 127, pids);
+	else if (errno == EACCES)
+		ft_error("Permission denied", cmd, 126, pids);
+	else
+		ft_error("Exec failed", cmd, 1, pids);
+}
+
+int	wait_for_children(pid_t *pids, int count)
+{
+	int	i;
+	int	status;
+	int	exit_code;
+
+	i = 0;
+	exit_code = 0;
+	while (i < count)
+	{
+		waitpid(pids[i], &status, 0);
+		if (i == count - 1)
+		{
+			if (WIFEXITED(status))
+				exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				exit_code = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
+	return (exit_code);
+}
 
 int	setup_heredoc(const char *delimiter)
 {
@@ -61,30 +107,4 @@ int	parse_arguments(t_pipex *px, int argc, char **argv)
 	}
 	px->outfile = argv[argc - 1];
 	return (1);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_pipex	px;
-	int		i;
-
-	if (!parse_arguments(&px, argc, argv))
-		return (1);
-	if (!init_pipex(&px, argc, argv, envp))
-		return (1);
-	if (!create_pipes(&px))
-		return (ft_free_pipes(&px, px.n_cmds - 1), 1);
-	if (!fork_children(&px))
-		return (ft_free_all(&px), 1);
-	i = -1;
-	while (++i < px.n_cmds - 1)
-	{
-		close(px.pipes[i][0]);
-		close(px.pipes[i][1]);
-	}
-	i = wait_for_children(px.pids, px.n_cmds);
-	if (px.heredoc && access(".heredoc_tmp", F_OK) == 0)
-		unlink(".heredoc_tmp");
-	ft_free_all(&px);
-	return (i);
 }

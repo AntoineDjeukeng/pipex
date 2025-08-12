@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_ptr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:18:49 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/03 18:50:26 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:50:23 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_print_ptr(t_flags *f, va_list *args)
 	final_str = ft_print_ptr_and_return_len(f, va_arg(*args, void *));
 	if (!final_str)
 		return (-1);
-	printed_len = (int)write(1, final_str, ft_strlen(final_str));
+	printed_len = (int)write(f->fd, final_str, ft_strlen(final_str));
 	free(final_str);
 	return (printed_len);
 }

@@ -6,7 +6,7 @@
 #    By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 14:45:59 by adjeuken          #+#    #+#              #
-#    Updated: 2025/08/04 16:20:38 by adjeuken         ###   ########.fr        #
+#    Updated: 2025/08/07 01:53:11 by adjeuken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,39 +14,39 @@ NAME        = pipex
 BONUS_NAME  = pipex_bonus
 
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror \
-              -I./libft \
-              -I./utils
-LDFLAGS     = -L./libft -lft
+CFLAGS      = -Wall -Wextra -Werror -I./libft -I./utils
 
 LIBFT_DIR   = ./libft
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
-SRC         = utils/fork.c utils/ft_cleanup_process.c
+SRC         = ft_execve.c ft_error.c ft_childrens.c cleanup.c pipex_utils.c
 SRCS_MAIN   = main.c $(SRC)
 OBJS_MAIN   = $(SRCS_MAIN:.c=.o)
 
-SRCS_BONUS  = main_bonus.c $(SRC)
+SRCS_BONUS  = main.c $(SRC)
 OBJS_BONUS  = $(SRCS_BONUS:.c=.o)
 
 # Default rule builds both binaries
-all: $(NAME) $(BONUS_NAME)
+all: $(LIBFT_LIB) $(NAME) $(BONUS_NAME)
 
-$(NAME): $(OBJS_MAIN) $(LIBFT_LIB)
-	$(CC) $(OBJS_MAIN) $(LDFLAGS) -o $@
+$(NAME): $(OBJS_MAIN)
+	$(CC) $(CFLAGS) $(OBJS_MAIN) $(LIBFT_LIB) -o $(NAME)
 
-$(BONUS_NAME): $(OBJS_BONUS) $(LIBFT_LIB)
-	$(CC) $(OBJS_BONUS) $(LDFLAGS) -o $@
+$(BONUS_NAME): $(OBJS_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT_LIB) -o $(BONUS_NAME)
 
-# Build libft if needed
+# Build libft
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_DIR)
 
+# Object rule
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Bonus rule
 bonus: $(BONUS_NAME)
 
+# Clean rules
 clean:
 	rm -f $(OBJS_MAIN) $(OBJS_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean

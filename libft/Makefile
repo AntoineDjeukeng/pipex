@@ -1,33 +1,60 @@
-NAME = libft.a
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/08/07 01:05:25 by adjeuken          #+#    #+#              #
+#    Updated: 2025/08/07 15:38:20 by adjeuken         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wrestrict
+NAME        = libft.a
 
-LIB_SRCS := $(filter-out main.c, $(wildcard *.c)) \
-            $(wildcard ft_printf/*.c) \
-            $(wildcard get_next_line/*.c)
+CC          = gcc
+CFLAGS      = -Wall -Wextra -Werror
 
-LIB_OBJS := $(LIB_SRCS:.c=.o)
-TEST_SRC := main.c
-TEST_OBJS := $(TEST_SRC:.c=.o)
+ 
+FT_PRINTF_FILES = ft_printf/ft_flags.c ft_printf/ft_input_string.c\
+ ft_printf/ft_itoa_hex_split.c ft_printf/ft_itoa_int_split.c\
+ ft_printf/ft_itoa_uint_split.c ft_printf/ft_pad_string.c\
+ ft_printf/ft_pad_string_hex.c ft_printf/ft_printf.c\
+ ft_printf/ft_printf_hex.c ft_printf/ft_printf_int.c\
+ ft_printf/ft_printf_percent.c ft_printf/ft_printf_ptr.c\
+ ft_printf/ft_printf_str.c ft_printf/ft_printf_uint.c ft_printf/ft_strndup.c ft_printf/ft_printf_help.c   
+
+LIBFT_FILES = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c\
+ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c ft_itoa.c\
+ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c\
+ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c\
+ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c\
+ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c\
+ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c\
+ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncat.c\
+ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c\
+ft_substr.c ft_tolower.c ft_toupper.c
+
+GET_NEXT_LINE_FILES = \
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+
+SRCS = $(LIBFT_FILES) $(FT_PRINTF_FILES) $(GET_NEXT_LINE_FILES)
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIB_OBJS)
-	ar rcs $(NAME) $(LIB_OBJS)
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test: $(NAME) $(TEST_OBJS)
-	$(CC) $(CFLAGS) $(TEST_OBJS) -L. -lft -o test_ft
-
 clean:
-	rm -f $(LIB_OBJS) $(TEST_OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) test_ft
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re
