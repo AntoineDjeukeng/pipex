@@ -1,46 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_uint_split.c                               :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 17:55:40 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/06/29 16:11:09 by adjeuken         ###   ########.fr       */
+/*   Created: 2025/05/21 08:43:37 by adjeuken          #+#    #+#             */
+/*   Updated: 2025/06/29 16:12:52 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	count_unsigned_digits(unsigned int n)
+char	*ft_strdup(char *s)
 {
-	int	len;
+	int		i;
+	char	*dup;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	while (n)
+	i = 0;
+	while (s[i])
+		i++;
+	dup = (char *)malloc((i + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		len++;
-		n /= 10;
+		dup[i] = s[i];
+		i++;
 	}
-	return (len);
+	dup[i] = '\0';
+	return (dup);
 }
 
-char	*ft_itoa_uint_split(unsigned int n)
+char	*ft_strndup(const char *s, size_t n)
 {
-	int		len;
-	char	*result;
+	size_t	i;
+	size_t	j;
+	char	*dup;
 
-	len = count_unsigned_digits(n);
-	result = malloc((len + 1) * sizeof(char));
-	if (!result)
+	i = 0;
+	j = 0;
+	while (i < n && s[i])
+		i++;
+	dup = (char *)malloc(i + 1);
+	if (!dup)
 		return (NULL);
-	result[len] = '\0';
-	while (len)
+	while (j < i)
 	{
-		result[--len] = (n % 10) + '0';
-		n /= 10;
+		dup[j] = s[j];
+		j++;
 	}
-	return (result);
+	dup[i] = '\0';
+	return (dup);
 }

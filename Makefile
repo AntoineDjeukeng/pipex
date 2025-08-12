@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+         #
+#    By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/04 14:45:59 by adjeuken          #+#    #+#              #
-#    Updated: 2025/08/07 01:53:11 by adjeuken         ###   ########.fr        #
+#    Updated: 2025/08/12 11:33:31 by adjeuken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ CFLAGS      = -Wall -Wextra -Werror -I./libft -I./utils
 LIBFT_DIR   = ./libft
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
-SRC         = ft_execve.c ft_error.c ft_childrens.c cleanup.c pipex_utils.c
-SRCS_MAIN   = main.c $(SRC)
+SRC         = main.c ft_execve.c ft_error.c ft_childrens.c cleanup.c pipex_utils.c
+SRCS_MAIN   = parse_arguments.c $(SRC)
 OBJS_MAIN   = $(SRCS_MAIN:.c=.o)
 
-SRCS_BONUS  = main.c $(SRC)
+SRCS_BONUS  = parse_arguments_bonus.c $(SRC)
 OBJS_BONUS  = $(SRCS_BONUS:.c=.o)
 
 # Default rule builds both binaries

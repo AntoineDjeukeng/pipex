@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
+/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 23:33:43 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/07 16:50:17 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:53:33 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void		ft_free_all(t_pipex *px);
 void		ft_free_pipes(t_pipex *px, int count);
 void		ft_print_error(int fd, char *context, char *msg);
 int			setup_heredoc(const char *delimiter);
-int	setup_heredoc(const char *delimiter);
-int	parse_arguments(t_pipex *px, int argc, char **argv);
+int			setup_heredoc(const char *delimiter);
+int			parse_arguments(t_pipex *px, int argc, char **argv);

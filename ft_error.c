@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
+/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 02:32:42 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/07 16:43:08 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:53:13 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 void	ft_print_error(int fd, char *context, char *msg)
 {
-	ft_putstr_fd("pipex: ", fd);
-	if (context)
-	{
-		ft_putstr_fd(context, fd);
-		ft_putstr_fd(": ", fd);
-	}
-	if (msg)
-		ft_putstr_fd(msg, fd);
-	ft_putstr_fd("\n", fd);
+	if (context && msg)
+		ft_dprintf(fd, "pipex: %s: %s\n", context, msg);
+	else if (context)
+		ft_dprintf(fd, "pipex: %s\n", context);
+	else if (msg)
+		ft_dprintf(fd, "pipex: %s\n", msg);
+	else
+		ft_dprintf(fd, "pipex:\n");
 }
 
 void	ft_error(const char *msg, const char *detail, int exit_code,

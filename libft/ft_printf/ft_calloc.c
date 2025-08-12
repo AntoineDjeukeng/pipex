@@ -1,46 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_uint_split.c                               :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 17:55:40 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/06/29 16:11:09 by adjeuken         ###   ########.fr       */
+/*   Created: 2025/05/21 07:28:00 by adjeuken          #+#    #+#             */
+/*   Updated: 2025/06/29 16:07:10 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	count_unsigned_digits(unsigned int n)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int	len;
+	size_t			total;
+	void			*ptr;
+	unsigned char	*p;
+	size_t			i;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
-}
-
-char	*ft_itoa_uint_split(unsigned int n)
-{
-	int		len;
-	char	*result;
-
-	len = count_unsigned_digits(n);
-	result = malloc((len + 1) * sizeof(char));
-	if (!result)
+	if (nmemb != 0 && size > SIZE_MAX / nmemb)
 		return (NULL);
-	result[len] = '\0';
-	while (len)
+	total = nmemb * size;
+	ptr = malloc(total);
+	if (!ptr)
+		return (NULL);
+	p = (unsigned char *)ptr;
+	i = 0;
+	while (i < total)
 	{
-		result[--len] = (n % 10) + '0';
-		n /= 10;
+		p[i] = 0;
+		i++;
 	}
-	return (result);
+	return (ptr);
 }

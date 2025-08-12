@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+         #
+#    By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/07 01:05:25 by adjeuken          #+#    #+#              #
-#    Updated: 2025/08/07 15:38:20 by adjeuken         ###   ########.fr        #
+#    Updated: 2025/08/12 11:20:59 by adjeuken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,12 @@ NAME        = libft.a
 CC          = gcc
 CFLAGS      = -Wall -Wextra -Werror
 
- 
-FT_PRINTF_FILES = ft_printf/ft_flags.c ft_printf/ft_input_string.c\
- ft_printf/ft_itoa_hex_split.c ft_printf/ft_itoa_int_split.c\
- ft_printf/ft_itoa_uint_split.c ft_printf/ft_pad_string.c\
- ft_printf/ft_pad_string_hex.c ft_printf/ft_printf.c\
- ft_printf/ft_printf_hex.c ft_printf/ft_printf_int.c\
- ft_printf/ft_printf_percent.c ft_printf/ft_printf_ptr.c\
- ft_printf/ft_printf_str.c ft_printf/ft_printf_uint.c ft_printf/ft_strndup.c ft_printf/ft_printf_help.c   
+
+FT_PRINTF_FILES =  ft_printf/ft_flags.c ft_printf/ft_calloc.c ft_printf/ft_input_string.c ft_printf/ft_isdigit.c ft_printf/ft_itoa_hex_split.c \
+ ft_printf/ft_itoa_int_split.c ft_printf/ft_itoa_uint_split.c ft_printf/ft_pad_string.c ft_printf/ft_printf.c \
+ ft_printf/ft_printf_hex.c ft_printf/ft_printf_int.c ft_printf/ft_printf_percent.c ft_printf/ft_printf_ptr.c \
+ ft_printf/ft_printf_str.c ft_printf/ft_printf_uint.c ft_printf/ft_strchr.c ft_printf/ft_strdup.c ft_printf/ft_strlcpy.c \
+ ft_printf/ft_strlen.c ft_printf/ft_substr.c ft_printf/ft_memcpy.c ft_printf/ft_pad_string_hex.c
 
 LIBFT_FILES = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c\
 ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c ft_itoa.c\

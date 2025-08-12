@@ -3,65 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adjeuken  <adjeuken@student.42.fr>         +#+  +:+       +#+        */
+/*   By: adjeuken <adjeuken@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 02:27:38 by adjeuken          #+#    #+#             */
-/*   Updated: 2025/08/07 15:00:31 by adjeuken         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:34:30 by adjeuken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	setup_heredoc(const char *delimiter)
-{
-	int		pipefd[2];
-	char	*line;
-
-	if (pipe(pipefd) == -1)
-		return (-1);
-	while (1)
-	{
-		write(1, "heredoc> ", 9);
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			break ;
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-			&& line[ft_strlen(delimiter)] == '\n')
-		{
-			free(line);
-			break ;
-		}
-		write(pipefd[1], line, ft_strlen(line));
-		free(line);
-	}
-	close(pipefd[1]);
-	return (pipefd[0]);
-}
-
-int	parse_arguments(t_pipex *px, int argc, char **argv)
-{
-	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", 9) == 0 && argc < 6))
-	{
-		ft_print_error(STDERR_FILENO, NULL, "Error: invalid arguments");
-		return (0);
-	}
-	px->heredoc = 0;
-	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
-	{
-		px->heredoc = 1;
-		px->heredoc_delimiter = argv[2];
-		px->cmds = &argv[3];
-		px->n_cmds = argc - 4;
-	}
-	else
-	{
-		px->heredoc_delimiter = NULL;
-		px->cmds = &argv[2];
-		px->n_cmds = argc - 3;
-	}
-	px->outfile = argv[argc - 1];
-	return (1);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
